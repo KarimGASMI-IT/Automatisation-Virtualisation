@@ -1,0 +1,24 @@
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    daemon
+
+defaults
+    log global
+    mode http
+    option httplog
+    option dontlognull
+    timeout connect 5s
+    timeout client 30s
+    timeout server 30s
+
+frontend http_front
+    bind *:{{ haproxy_bind_port }}
+    default_backend apache_back
+
+backend apache_back
+    balance roundrobin
+    option httpchk GET /
+{% for host in groups['webservers'] %}
+    server {{ host | replace('.', '_') }} {{ host }}:{{ haproxy_backend_port }} check
+{% endfor %}

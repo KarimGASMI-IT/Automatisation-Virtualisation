@@ -1,0 +1,17 @@
+---
+lan_gateway: 10.1.1.1
+lan_dns: 10.1.1.1
+
+haproxy_bind_port: 80
+haproxy_backend_port: 80
+
+web_document_root: /var/www/html
+
+prometheus_scrape_interval: 15s
+prometheus_web_listen_address: 0.0.0.0:9090
+
+node_exporter_listen_address: 0.0.0.0:9100
+
+# Dashboard / login reminder
+# Default Grafana URL: http://10.1.1.30:3000
+# Default initial login: admin / admin

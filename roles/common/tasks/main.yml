@@ -1,0 +1,20 @@
+---
+- name: Install common packages
+  apt:
+    name:
+      - curl
+      - wget
+      - vim
+      - gnupg
+      - ca-certificates
+      - apt-transport-https
+      - lsb-release
+    state: present
+    update_cache: yes
+
+- name: Ensure basic services are enabled
+  service:
+    name: ssh
+    state: started
+    enabled: true
+  ignore_errors: true

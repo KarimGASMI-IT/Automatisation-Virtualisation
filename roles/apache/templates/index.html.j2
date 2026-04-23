@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ inventory_hostname }}</title>
+</head>
+<body>
+  <h1>Serveur {{ inventory_hostname }}</h1>
+  <p>Déployé automatiquement par Ansible.</p>
+  <p>Adresse IP cible : {{ ansible_host | default(inventory_hostname) }}</p>
+</body>
+</html>

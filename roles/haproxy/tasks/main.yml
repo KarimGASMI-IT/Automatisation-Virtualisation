@@ -1,0 +1,32 @@
+---
+- name: Stop Apache if present on load balancer
+  service:
+    name: apache2
+    state: stopped
+    enabled: false
+  ignore_errors: true
+
+- name: Install HAProxy
+  apt:
+    name: haproxy
+    state: present
+    update_cache: yes
+
+- name: Deploy HAProxy configuration
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart HAProxy
+
+- name: Validate HAProxy configuration
+  command: haproxy -c -f /etc/haproxy/haproxy.cfg
+  changed_when: false
+
+- name: Ensure HAProxy is enabled and started
+  service:
+    name: haproxy
+    state: started
+    enabled: true
