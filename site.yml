@@ -1,0 +1,26 @@
+---
+- name: Common baseline on all Linux nodes
+  hosts: linux_nodes
+  become: true
+  roles:
+    - common
+    - node_exporter
+
+- name: Deploy Apache on webservers
+  hosts: webservers
+  become: true
+  roles:
+    - apache
+
+- name: Deploy HAProxy on load balancer
+  hosts: loadbalancer
+  become: true
+  roles:
+    - haproxy
+
+- name: Deploy Prometheus and Grafana on monitoring host
+  hosts: monitoring
+  become: true
+  roles:
+    - prometheus
+    - grafana
